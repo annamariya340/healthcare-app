@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Welcome Card -->
+    <div class="col-12 mb-4">
+        <div class="card p-4 bg-primary text-white">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="fw-bold mb-1">
+                        <i class="fas fa-hand-wave me-2"></i>
+                        Welcome, {{ session.name }}!
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Find doctors and book appointments easily
+                    </p>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-user-injured fa-4x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Doctors -->
+    <div class="col-12 mb-4">
+        <h4 class="fw-bold mb-3">
+            <i class="fas fa-user-md me-2 text-primary"></i>
+            Available Doctors
+        </h4>
+        <div class="row">
+            {% for doctor in doctors %}
+            <div class="col-md-4 mb-3">
+                <div class="card p-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-primary text-white d-flex 
+                                    align-items-center justify-content-center me-3"
+                             style="width:50px;height:50px;font-size:20px;">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0">Dr. {{ doctor[1] }}</h6>
+                            <small class="text-muted">{{ doctor[2] }}</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="badge bg-light text-dark me-2">
+                            <i class="fas fa-briefcase me-1"></i>
+                            {{ doctor[3] }} years exp.
+                        </span>
+                        <span class="badge bg-success">
+                            <i class="fas fa-rupee-sign me-1"></i>
+                            {{ doctor[4] }} fee
+                        </span>
+                    </div>
+                    <a href="{{ url_for('patient.book_appointment', doctor_id=doctor[0]) }}"
+                       class="btn btn-primary btn-sm mt-auto">
+                        <i class="fas fa-calendar-plus me-1"></i>Book Appointment
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No doctors available yet.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- My Appointments -->
+    <div class="col-12">
+        <h4 class="fw-bold mb-3">
+            <i class="fas fa-calendar-check me-2 text-primary"></i>
+            My Appointments
+        </h4>
+        <div class="card">
+            <div class="card-body">
+                {% if appointments %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Doctor</th>
+                                <th>Specialization</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for apt in appointments %}
+                            <tr>
+                                <td>Dr. {{ apt[1] }}</td>
+                                <td>{{ apt[2] }}</td>
+                                <td>{{ apt[3] }}</td>
+                                <td>{{ apt[4] }}</td>
+                                <td>{{ apt[6] }}</td>
+                                <td>
+                                    {% if apt[5] == 'confirmed' %}
+                                        <span class="badge bg-success">Confirmed</span>
+                                    {% elif apt[5] == 'pending' %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if apt[5] == 'pending' %}
+                                    <a href="{{ url_for('patient.cancel_appointment', appointment_id=apt[0]) }}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Cancel this appointment?')">
+                                        <i class="fas fa-times me-1"></i>Cancel
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No appointments yet. Book one above!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

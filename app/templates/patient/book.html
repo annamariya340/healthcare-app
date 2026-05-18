@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <!-- Doctor Info Card -->
+        <div class="card p-4 mb-4 bg-primary text-white">
+            <div class="d-flex align-items-center">
+                <div class="rounded-circle bg-white text-primary d-flex
+                            align-items-center justify-content-center me-3"
+                     style="width:60px;height:60px;font-size:25px;">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div>
+                    <h4 class="fw-bold mb-0">Dr. {{ doctor[0] }}</h4>
+                    <p class="mb-0 opacity-75">{{ doctor[1] }}</p>
+                    <span class="badge bg-light text-dark mt-1">
+                        <i class="fas fa-rupee-sign me-1"></i>
+                        Consultation Fee: {{ doctor[2] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="card p-4">
+            <h5 class="fw-bold mb-4">
+                <i class="fas fa-calendar-plus me-2 text-primary"></i>
+                Book Appointment
+            </h5>
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fas fa-calendar me-1"></i>
+                        Appointment Date
+                    </label>
+                    <input type="date" name="appointment_date"
+                           class="form-control form-control-lg"
+                           min="{{ '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fas fa-clock me-1"></i>
+                        Time Slot
+                    </label>
+                    <select name="time_slot" class="form-select form-select-lg" required>
+                        <option value="">-- Select Time --</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                        <option value="05:00 PM">05:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                        <i class="fas fa-notes-medical me-1"></i>
+                        Reason for Visit
+                    </label>
+                    <textarea name="reason" class="form-control"
+                              rows="4" placeholder="Describe your symptoms or reason..."
+                              required></textarea>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Confirm Booking
+                    </button>
+                    <a href="{{ url_for('patient.dashboard') }}"
+                       class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Go Back
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

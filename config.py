@@ -11,3 +11,4 @@ class Config:
     MYSQL_DB = os.getenv('MYSQL_DB')
     AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
     AWS_REGION = os.getenv('AWS_REGION')
+    

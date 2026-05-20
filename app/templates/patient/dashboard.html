@@ -53,8 +53,8 @@
                             {{ doctor[4] }} fee
                         </span>
                     </div>
-                    <a href="{{ url_for('patient.book_appointment', doctor_id=doctor[0]) }}"
-                       class="btn btn-primary btn-sm mt-auto">
+<a href="{{ url_for('patient.book_appointment', doctor_user_id=doctor[0]) }}"
+                    class="btn btn-primary btn-sm mt-auto">
                         <i class="fas fa-calendar-plus me-1"></i>Book Appointment
                     </a>
                 </div>
